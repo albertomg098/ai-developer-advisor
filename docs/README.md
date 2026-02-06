@@ -9,37 +9,37 @@ This package contains everything you need to master Claude Code and become a hig
 
 ### Core Guides (Read in Order)
 
-1. **00_QUICK_START.md** ⭐ START HERE
+1. **00-quick-start.md** ⭐ START HERE
    - Daily rituals
    - The 4 contexts
    - Emergency protocols
    - 5-minute reference guide
 
-2. **01_CONTEXT_MANAGEMENT.md**
+2. **01-context-management.md**
    - Managing multiple projects simultaneously
    - Context file system
    - Switching between contexts
    - Real-world examples
 
-3. **02_CHAT_CODE_PLAN_GUIDE.md**
+3. **02-chat-code-plan-guide.md**
    - When to use Chat vs Code vs Plan
    - Decision matrices
    - Tool workflows
    - Context-specific guidance
 
-4. **03_EVIDENCE_DRIVEN_DEV.md** ⭐ CORE PRINCIPLE
+4. **03-evidence-driven-dev.md** ⭐ CORE PRINCIPLE
    - Test-first development
    - The evidence pyramid
    - Making Claude Code produce testable code
    - Verification protocols
 
-5. **04_CONTEXT_PROTOCOLS.md**
+5. **04-context-protocols.md**
    - Step-by-step workflows for each context
    - Real examples with actual code
    - Context switching protocols
    - Session management
 
-6. **05_SKILLS_COMMANDS_HOOKS.md**
+6. **05-skills-commands-hooks.md**
    - Leveraging Claude Code's advanced features
    - Creating custom skills
    - Building command libraries
@@ -52,30 +52,30 @@ This package contains everything you need to master Claude Code and become a hig
 ### Week 1: Fundamentals
 
 **Day 1 - Monday: Setup & First Session**
-- Read: `00_QUICK_START.md` (print it, keep it visible)
-- Read: `01_CONTEXT_MANAGEMENT.md`
+- Read: `00-quick-start.md` (print it, keep it visible)
+- Read: `01-context-management.md`
 - Action: Create contexts/ directory structure
 - Practice: One complete session (any small task)
 
 **Day 2 - Tuesday: Evidence-Driven Development**
-- Read: `03_EVIDENCE_DRIVEN_DEV.md` (this is THE core)
+- Read: `03-evidence-driven-dev.md` (this is THE core)
 - Action: Pick one small feature
 - Practice: Build it test-first (tests → implement → verify)
 
 **Day 3 - Wednesday: Tool Mastery**
-- Read: `02_CHAT_CODE_PLAN_GUIDE.md`
+- Read: `02-chat-code-plan-guide.md`
 - Practice: Use Chat for design, Code for implementation
 - Practice: One investigation using Chat → Code pipeline
 
 **Day 4 - Thursday: Context Protocols**
-- Read: `04_CONTEXT_PROTOCOLS.md`
+- Read: `04-context-protocols.md`
 - Practice: Deliberately practice each context type
   - Morning: EXPLORATION (find something confusing)
   - Afternoon: BUILDING (implement small feature)
   - Evening: Review progress
 
 **Day 5 - Friday: Advanced Features**
-- Read: `05_SKILLS_COMMANDS_HOOKS.md`
+- Read: `05-skills-commands-hooks.md`
 - Action: Create your first custom skill
 - Action: Set up basic git hooks
 - Practice: Use skills explicitly in prompts
@@ -293,12 +293,12 @@ POLICY
 ## 📞 When You Need Help
 
 ### Quick Answers
-- Reread `00_QUICK_START.md`
-- Check the relevant protocol in `04_CONTEXT_PROTOCOLS.md`
+- Reread `00-quick-start.md`
+- Check the relevant protocol in `04-context-protocols.md`
 
 ### Stuck on Concepts
-- Reread `02_CHAT_CODE_PLAN_GUIDE.md` for tool selection
-- Reread `03_EVIDENCE_DRIVEN_DEV.md` for testing approach
+- Reread `02-chat-code-plan-guide.md` for tool selection
+- Reread `03-evidence-driven-dev.md` for testing approach
 
 ### Example Needed
 - All protocol files have complete real-world examples
@@ -308,7 +308,7 @@ POLICY
 
 ## 🎯 Your First Action (Right Now)
 
-1. **Print `00_QUICK_START.md`** - Put it next to your monitor
+1. **Print `00-quick-start.md`** - Put it next to your monitor
 2. **Create contexts/active/** - Your command center
 3. **Do one practice session:**
    - Pick the smallest task in your project
@@ -318,7 +318,7 @@ POLICY
    - Update context file
    - Commit
 
-4. **Come back tomorrow** - Read `01_CONTEXT_MANAGEMENT.md`
+4. **Come back tomorrow** - Read `01-context-management.md`
 
 ---
 
@@ -326,12 +326,12 @@ POLICY
 
 | File | Purpose | When to Read |
 |------|---------|--------------|
-| `00_QUICK_START.md` | Daily reference, quick lookup | Every morning first week |
-| `01_CONTEXT_MANAGEMENT.md` | Multi-project juggling | When overwhelmed |
-| `02_CHAT_CODE_PLAN_GUIDE.md` | Tool selection | When unsure which tool |
-| `03_EVIDENCE_DRIVEN_DEV.md` | Testing discipline | Daily until automatic |
-| `04_CONTEXT_PROTOCOLS.md` | Step-by-step workflows | When starting any task |
-| `05_SKILLS_COMMANDS_HOOKS.md` | Power features | After basics mastered |
+| `00-quick-start.md` | Daily reference, quick lookup | Every morning first week |
+| `01-context-management.md` | Multi-project juggling | When overwhelmed |
+| `02-chat-code-plan-guide.md` | Tool selection | When unsure which tool |
+| `03-evidence-driven-dev.md` | Testing discipline | Daily until automatic |
+| `04-context-protocols.md` | Step-by-step workflows | When starting any task |
+| `05-skills-commands-hooks.md` | Power features | After basics mastered |
 
 ---
 
@@ -351,4 +351,4 @@ The investment this week will pay dividends for years.
 
 ---
 
-**Ready? Open `00_QUICK_START.md` and begin.**
+**Ready? Open `00-quick-start.md` and begin.**

@@ -19,20 +19,26 @@ This is a **Claude Code plugin** that provides:
 
 ## Install as a Plugin
 
-### Option 1: Install from GitHub
+### Option 1: Marketplace Install (Recommended)
 
-```bash
-# In Claude Code, run:
-/install-plugin https://github.com/albertomartin/claude-code-mental-model
+```
+/plugin marketplace add albertomg098/ai-developer-advisor
+/plugin install ai-dev-advisor@ai-dev-advisor-marketplace
 ```
 
-### Option 2: Clone and install locally
+### Option 2: Local Testing
+
+Clone the repo and point Claude Code at it:
 
 ```bash
-git clone https://github.com/albertomartin/claude-code-mental-model
-cd your-project
-# Install from local path
-/install-plugin /path/to/claude-code-mental-model
+git clone https://github.com/albertomg098/ai-developer-advisor
+claude --plugin-dir /path/to/ai-developer-advisor
+```
+
+### Uninstalling
+
+```
+/plugin uninstall ai-dev-advisor
 ```
 
 ### After Installing: Run Setup
@@ -131,7 +137,9 @@ Context files (`contexts/active/*.md`) are what persist between sessions. Each s
 ```
 ai-dev-advisor/
 ├── .claude-plugin/
-│   └── plugin.json                   ← Plugin manifest
+│   ├── plugin.json                   ← Plugin manifest
+│   └── marketplace.json              ← Marketplace descriptor
+├── .gitignore
 ├── CLAUDE.md                         ← Advisor identity (Claude reads this)
 ├── README.md                         ← You are here
 ├── skills/                           ← 4 Anthropic-format skills (with templates)
@@ -155,16 +163,14 @@ ai-dev-advisor/
 │   ├── review-evidence.md
 │   ├── switch-context.md
 │   └── setup-advisor.md
-├── docs/                             ← 7-day learning path
-│   ├── README.md
-│   ├── 00-quick-start.md
-│   ├── 01-context-management.md
-│   ├── 02-chat-code-plan-guide.md
-│   ├── 03-evidence-driven-dev.md
-│   ├── 04-context-protocols.md
-│   └── 05-skills-commands-hooks.md
-└── reference/
-    └── usage-analysis.html
+└── docs/                             ← 7-day learning path
+    ├── README.md
+    ├── 00-quick-start.md
+    ├── 01-context-management.md
+    ├── 02-chat-code-plan-guide.md
+    ├── 03-evidence-driven-dev.md
+    ├── 04-context-protocols.md
+    └── 05-skills-commands-hooks.md
 ```
 
 ---

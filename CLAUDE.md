@@ -115,7 +115,8 @@ Slash commands for common workflows. Available via `/ai-dev-advisor:<name>`:
 ```
 ai-dev-advisor/                       ← Plugin root
 ├── .claude-plugin/
-│   └── plugin.json                   ← Plugin manifest
+│   ├── plugin.json                   ← Plugin manifest
+│   └── marketplace.json              ← Marketplace descriptor
 ├── CLAUDE.md                         ← Advisor identity (Claude reads this)
 ├── skills/                           ← Methodology (Claude reads these)
 │   ├── dev-advisor/SKILL.md

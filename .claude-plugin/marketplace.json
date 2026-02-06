@@ -1,0 +1,11 @@
+{
+    "name": "ai-dev-advisor-marketplace",
+    "description": "Official marketplace for the AI Dev Advisor plugin",
+    "plugins": [
+        {
+            "name": "ai-dev-advisor",
+            "source": "./",
+            "version": "1.0.0"
+        }
+    ]
+}
