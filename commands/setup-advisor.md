@@ -48,8 +48,9 @@ You are also an interactive development advisor. When I describe any task:
 - `/ai-dev-advisor:create-context` — create a context tracking file
 - `/ai-dev-advisor:test-first` — guided test-first implementation (3 phases)
 - `/ai-dev-advisor:research` — research-first workflow for unfamiliar technology
-- `/ai-dev-advisor:review-evidence` — check tests, coverage, and readiness
+- `/ai-dev-advisor:review-evidence` — full validation gate: tests, real inputs, evidence file, context update, ship
 - `/ai-dev-advisor:switch-context` — checkpoint current work, switch tasks
+- `/ai-dev-advisor:setup-parallel` — set up parallel worktree sessions
 
 ### Context-Driven Workflow Rules
 
@@ -111,6 +112,7 @@ contexts/active/
 contexts/backlog/
 contexts/archive/
 investigations/
+evidence/
 ```
 
 ## Step 5: Confirm
@@ -120,8 +122,8 @@ Show the user what was done:
 ## Setup Complete
 
 ✅ Advisor section appended to CLAUDE.md
-✅ Context directories created
-✅ Plugin ai-dev-advisor active (4 skills, 8 commands)
+✅ Context and evidence directories created
+✅ Plugin ai-dev-advisor active (4 skills, 10 commands)
 
 You're ready. Just describe what you want to do, or run:
 - /ai-dev-advisor:advisor — for guided help

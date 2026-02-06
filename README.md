@@ -9,7 +9,7 @@ An opinionated Claude Code plugin that turns Claude into an interactive AI devel
 This is a **Claude Code plugin** that provides:
 
 - **4 Skills** that teach Claude Code evidence-driven development methodology
-- **9 Slash Commands** for common advisor workflows (`/ai-dev-advisor:advisor`, `/ai-dev-advisor:test-first`, etc.)
+- **10 Slash Commands** for common advisor workflows (`/ai-dev-advisor:advisor`, `/ai-dev-advisor:test-first`, etc.)
 - **Templates** for context tracking, investigations, and test-first development
 - **Documentation** — a 7-day learning path for developers
 
@@ -82,6 +82,7 @@ Use these via `/ai-dev-advisor:<name>` in Claude Code:
 | `/ai-dev-advisor:review-evidence` | Run tests, check coverage, assess evidence pyramid, report readiness |
 | `/ai-dev-advisor:switch-context` | Checkpoint current work, switch to a different context cleanly |
 | `/ai-dev-advisor:setup-advisor` | Set up the advisor in a project — appends to CLAUDE.md, creates directories |
+| `/ai-dev-advisor:setup-parallel` | Set up parallel worktree sessions for multiple tasks |
 
 ---
 
@@ -120,17 +121,23 @@ The framework categorizes every task into one of four contexts:
 5. **Track progress** — context files in `contexts/active/` persist across sessions
 6. **Ship with confidence** — tests prove it works before you commit
 
-### Multiple Contexts, Multiple Sessions
+### Multiple Contexts, Parallel Sessions
 
-You can run several Claude Code sessions in parallel, each on a different task:
+Use git worktrees to work on multiple tasks in parallel — each task gets its own directory, branch, and Claude Code session:
 
+```bash
+# Set up parallel sessions (or use /ai-dev-advisor:setup-parallel)
+git worktree add ../myapp-hotfix-auth-bug/ hotfix/auth-bug
+git worktree add ../myapp-feature-csv-export/ feature/csv-export
+git worktree add ../myapp-explore-email-delays/ explore/email-delays
+
+# Open a terminal for each:
+cd ../myapp-hotfix-auth-bug/ && claude       # works on hotfix_auth-bug.md
+cd ../myapp-feature-csv-export/ && claude    # works on feature_csv-export.md
+cd ../myapp-explore-email-delays/ && claude  # works on explore_email-delays.md
 ```
-Terminal 1:  claude  →  "Fix the auth token bug"        → works on hotfix_auth_token.md
-Terminal 2:  claude  →  "Add CSV export feature"         → works on feature_csv_export.md
-Terminal 3:  claude  →  "Why are emails slow?"           → works on explore_email_delays.md
-```
 
-Context files (`contexts/active/*.md`) are what persist between sessions. Each session reads its context file at start and updates it at end. You don't need to create contexts manually — when you describe a task, the advisor offers to create one. For quick one-off tasks, skip context tracking entirely.
+Context files (`contexts/active/*.md`) are shared across all worktrees (same git repo). Each session auto-detects its branch and loads the matching context file. For quick one-off tasks, skip context tracking entirely.
 
 ---
 
@@ -159,7 +166,7 @@ ai-dev-advisor/
 │       ├── SKILL.md
 │       └── templates/
 │           └── research-prompt.md
-├── commands/                         ← 9 slash commands (/ai-dev-advisor:*)
+├── commands/                         ← 10 slash commands (/ai-dev-advisor:*)
 │   ├── advisor.md
 │   ├── diagnose.md
 │   ├── start-session.md
@@ -168,7 +175,8 @@ ai-dev-advisor/
 │   ├── research.md
 │   ├── review-evidence.md
 │   ├── switch-context.md
-│   └── setup-advisor.md
+│   ├── setup-advisor.md
+│   └── setup-parallel.md
 └── docs/                             ← 7-day learning path
     ├── README.md
     ├── 00-quick-start.md

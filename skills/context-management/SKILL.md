@@ -2,8 +2,9 @@
 name: context-management
 description: >
   Managing multiple simultaneous development contexts. Covers context file system,
-  naming conventions, state transitions, and switching protocols. Use when juggling
-  multiple tasks, switching between work items, or setting up context tracking.
+  naming conventions, state transitions, switching protocols, and parallel worktree
+  sessions. Use when juggling multiple tasks, switching between work items, or
+  setting up context tracking.
 ---
 
 # Context Management — Multiple Simultaneous Workflows
@@ -25,7 +26,8 @@ your-project/
 │   ├── active/       ← Currently working on (2–5 files)
 │   ├── backlog/      ← Planned but not started
 │   └── archive/      ← Completed or abandoned
-└── investigations/   ← Exploration-specific logs
+├── investigations/   ← Exploration-specific logs
+└── evidence/         ← Validation evidence files
 ```
 
 ### Naming Convention
@@ -165,6 +167,51 @@ git checkout [previous-branch]
 
 ---
 
+## 🌳 Parallel Work with Git Worktrees
+
+When you have 2+ tasks to work on **simultaneously** (not sequentially), use git worktrees to give each task its own directory and Claude Code session.
+
+### When to Use Worktrees vs Sequential Switching
+
+| Approach | Use When | Advantage |
+|----------|----------|-----------|
+| **Sequential switching** | 1 task at a time, occasional interrupts | Simpler, no extra directories |
+| **Parallel worktrees** | 2–5 tasks with independent owners/timelines | True parallel work, no context thrashing |
+
+### How It Works
+
+1. **Create context files** for all tasks in `contexts/active/` (shared across worktrees)
+2. **Commit** the context files to the base branch
+3. **Create branches** — one per task: `[type]/[name]`
+4. **Create worktrees** — naming convention: `../[project]-[type]-[name]/`
+5. **Open Claude Code** in each worktree directory — each session auto-detects its branch and loads the matching context file
+
+### Shared `contexts/` Directory
+
+Because worktrees share the same `.git` repo, `contexts/active/` is visible from all worktrees. This means:
+- Each session can **read** all context files (for cross-references)
+- Each session should **only modify** its own context file (matched by branch)
+- Context file commits from one worktree are visible in others after `git pull`
+
+### Completing a Worktree Task
+
+```bash
+# 1. From the worktree: merge to main
+git checkout main && git merge [type]/[name]
+
+# 2. Remove the worktree
+git worktree remove ../[project]-[type]-[name]/
+
+# 3. Archive the context
+mv contexts/active/[type]_[name].md contexts/archive/$(date +%Y%m%d)_[type]_[name].md
+```
+
+### Entry Point
+
+Use `/ai-dev-advisor:setup-parallel` to set up worktrees for multiple tasks in one step.
+
+---
+
 ## 🎪 Managing Multiple Investigations
 
 For concurrent investigations, use the **Hypotheses Board** pattern:
@@ -227,6 +274,11 @@ If >7: move some to backlog, archive completed ones, merge similar ones.
 - Hotfixes: always `hotfix/[name]`
 - Features: always `feature/[name]`
 - Improvements: usually `improve/[name]`
+
+For parallel work, each branch gets its own worktree: `../[project]-[type]-[name]/`
+
+### Rule 6: Worktree Sessions Modify Only Their Own Context
+Each parallel session reads its own context file (matched by branch). Do not modify context files belonging to other active worktree sessions.
 
 ---
 

@@ -24,6 +24,11 @@ Follow this process:
    - 🟡 BLOCKED items (check if unblockable now)
    - 🟢 ACTIVE items (recommend most impactful)
 
+3b. **If 3+ active contexts exist**, offer parallel setup:
+    "You have [N] active contexts. Would you like to:
+    a) Pick ONE to focus on this session
+    b) Set up parallel worktree sessions → `/ai-dev-advisor:setup-parallel`"
+
 4. **Show session checklist**:
    ```
    □ Know which context I'm working on

@@ -58,8 +58,12 @@ Q4: Is everything working, just want to make it better?
     NO  → Q5
 
 Q5: Do you have multiple things going on?
-    YES → Start with highest priority, use context management
+    YES → Q5.1
     NO  → Re-read Q1–Q4, you're in one of them
+
+Q5.1: Do you want to work on them in parallel or one at a time?
+    PARALLEL      → Set up worktrees, one Claude Code session per task
+    ONE AT A TIME → Start with highest priority, use context switching
 ```
 
 ---
@@ -183,9 +187,10 @@ When the developer has multiple things going on:
    - 🔴 CRITICAL (firefighting) → work on first
    - 🟡 IMPORTANT (exploration, building) → work on next
    - 🟢 NICE-TO-HAVE (improving) → backlog
-3. **Work on ONE context per session**
-4. **Use context switching protocol** to move between items cleanly
-5. **Max 5–7 active contexts** — move extras to backlog
+3. **Choose parallel or sequential:**
+   - **Parallel (worktrees):** Set up git worktrees, open Claude Code in each. Use `/ai-dev-advisor:setup-parallel`.
+   - **Sequential (switching):** Work on ONE context per session, use context switching protocol.
+4. **Max 5–7 active contexts** — move extras to backlog
 
 ---
 
@@ -233,7 +238,8 @@ After diagnosing the context, route to:
 | 🏗️ BUILDING (familiar tech) | `test-first` | `/ai-dev-advisor:test-first` |
 | 🏗️ BUILDING (needs research) | `tool-selection` | `/ai-dev-advisor:research` |
 | ✨ IMPROVING | `test-first` | `/ai-dev-advisor:review-evidence` |
-| Multiple | `context-management` | `/ai-dev-advisor:start-session` |
+| Multiple (sequential) | `context-management` | `/ai-dev-advisor:start-session` |
+| Multiple (parallel) | `context-management` | `/ai-dev-advisor:setup-parallel` |
 
 Reference `docs/04-context-protocols.md` for full step-by-step protocol details.
 

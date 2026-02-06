@@ -85,9 +85,10 @@ Slash commands for common workflows. Available via `/ai-dev-advisor:<name>`:
 | `/ai-dev-advisor:create-context` | Generate a new context tracking file from template |
 | `/ai-dev-advisor:test-first` | Guided test-first implementation (3 phases with pauses) |
 | `/ai-dev-advisor:research` | Research-first workflow for unfamiliar technology (3 phases with pauses) |
-| `/ai-dev-advisor:review-evidence` | Run tests, check coverage, assess pyramid, report readiness |
+| `/ai-dev-advisor:review-evidence` | Full validation gate: tests, real inputs, evidence file, context update, ship |
 | `/ai-dev-advisor:switch-context` | Checkpoint current work, switch to different context |
 | `/ai-dev-advisor:setup-advisor` | Install advisor into a project — appends to CLAUDE.md, creates dirs |
+| `/ai-dev-advisor:setup-parallel` | Set up parallel worktree sessions for multiple tasks |
 
 ---
 
@@ -144,7 +145,8 @@ ai-dev-advisor/                       ← Plugin root
 │   ├── research.md
 │   ├── review-evidence.md
 │   ├── switch-context.md
-│   └── setup-advisor.md
+│   ├── setup-advisor.md
+│   └── setup-parallel.md
 └── docs/                             ← Human learning path
     ├── 00-quick-start.md
     ├── 01-context-management.md
@@ -161,7 +163,8 @@ your-project/
 │   ├── active/                       ← Current work
 │   ├── backlog/                      ← Planned work
 │   └── archive/                      ← Completed work
-└── investigations/                   ← Exploration logs
+├── investigations/                   ← Exploration logs
+└── evidence/                         ← Validation evidence files
 ```
 
 ---
@@ -180,6 +183,7 @@ Or use a command directly:
 - `/ai-dev-advisor:start-session` — begin a work session
 - `/ai-dev-advisor:test-first` — implement something test-first
 - `/ai-dev-advisor:research` — research unfamiliar tech before building
+- `/ai-dev-advisor:setup-parallel` — set up parallel worktree sessions
 
 ---
 

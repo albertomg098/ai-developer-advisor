@@ -4,6 +4,14 @@ Read the skill at `skills/context-management/SKILL.md` for the switching protoco
 
 Follow this process:
 
+## Step 0: Check for Worktrees
+
+1. Run `git worktree list`
+2. If the target context has an active worktree:
+   - Tell the user: "Context [name] has a worktree at `../[path]/`. Open a new terminal there instead of switching."
+   - Stop — no switching needed.
+3. If no worktree for the target, proceed with sequential switching below.
+
 ## Step 1: Checkpoint Current Work
 
 1. **Check for uncommitted changes**: `git status`
