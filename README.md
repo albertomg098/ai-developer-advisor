@@ -51,7 +51,7 @@ Open Claude Code in your project and run:
 
 This will:
 - Append the advisor section to your existing CLAUDE.md (without overwriting anything)
-- Create `contexts/active/`, `contexts/backlog/`, `contexts/archive/`, `investigations/`
+- Create `contexts/active/`, `contexts/backlog/`, `contexts/archive/`, `investigations/`, `evidence/`
 
 ### Start Using It
 
@@ -79,7 +79,7 @@ Use these via `/ai-dev-advisor:<name>` in Claude Code:
 | `/ai-dev-advisor:create-context` | Generate a context tracking file from template |
 | `/ai-dev-advisor:test-first` | Guided test-first implementation in 3 phases with pauses |
 | `/ai-dev-advisor:research` | Research-first workflow for unfamiliar technology (3 phases with pauses) |
-| `/ai-dev-advisor:review-evidence` | Run tests, check coverage, assess evidence pyramid, report readiness |
+| `/ai-dev-advisor:review-evidence` | Full validation gate: tests, real inputs, evidence file, context update, ship |
 | `/ai-dev-advisor:switch-context` | Checkpoint current work, switch to a different context cleanly |
 | `/ai-dev-advisor:setup-advisor` | Set up the advisor in a project — appends to CLAUDE.md, creates directories |
 | `/ai-dev-advisor:setup-parallel` | Set up parallel worktree sessions for multiple tasks |
@@ -119,7 +119,7 @@ The framework categorizes every task into one of four contexts:
 3. **Research if needed** — unfamiliar tech? Research in Chat first, then plan in Code
 4. **Follow the protocol** — test-first, evidence-driven, step by step
 5. **Track progress** — context files in `contexts/active/` persist across sessions
-6. **Ship with confidence** — tests prove it works before you commit
+6. **Validate and ship** — `/ai-dev-advisor:review-evidence` runs tests, validates real inputs, writes evidence, updates context, and offers to commit/PR
 
 ### Multiple Contexts, Parallel Sessions
 
