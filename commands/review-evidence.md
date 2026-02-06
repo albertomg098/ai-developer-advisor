@@ -230,15 +230,39 @@ After commit/PR is done:
 
 ### If FAIL:
 
-Show what's missing and suggest specific fixes:
+Show what's missing with specific fixes for each gate:
 ```
 ❌ Evidence gates not met:
 
 [For each failing gate:]
 - ❌ [Gate name]: [What's wrong] → [Specific action to fix]
-
-Fix these, then run /ai-dev-advisor:review-evidence again.
 ```
+
+Then immediately ask:
+```
+🔧 Want me to fix these now?
+1. Yes — fix all gaps and re-validate automatically
+2. Fix tests only — add missing tests, then re-validate
+3. No — I'll fix manually and re-run /ai-dev-advisor:review-evidence later
+```
+
+#### If the user says YES (fix and re-validate):
+
+1. **Fix each failing gate in order:**
+   - ❌ Tests failing → read the failure output, fix the code or test
+   - ❌ Coverage <80% → identify uncovered paths, write tests for them
+   - ❌ Missing integration tests → create them based on the context file's success criteria
+   - ❌ Regressions found → fix the regression, verify original behavior restored
+   - ❌ Real inputs failing → debug the pipeline against the failing fixture
+
+2. **After all fixes applied**, re-run the full validation automatically:
+   - Go back to **Step 2** and run the complete gate again
+   - Write a NEW evidence file (overwrite the previous one)
+   - Update the context file with the new results
+
+3. **Repeat until PASS or user stops:**
+   - Maximum 3 automatic fix cycles — if still failing after 3 rounds, stop and ask the user for guidance
+   - Each cycle appends to the session log: "Fix cycle N: fixed [X], [Y] still failing"
 
 ---
 
