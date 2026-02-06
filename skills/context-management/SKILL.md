@@ -267,7 +267,16 @@ mv contexts/active/[name].md contexts/archive/$(date +%Y%m%d)_[name].md
 ```
 
 ### Rule 4: Max 5–7 Active Contexts
-If >7: move some to backlog, archive completed ones, merge similar ones.
+If >5 active contexts, actively demote lower-priority items:
+
+1. **Identify candidates:** sort active contexts by last-updated date and priority
+2. **Demote:** move low-priority / stale contexts from `contexts/active/` → `contexts/backlog/`
+   - Set Status to `📋 Backlog`
+   - Add note: "Moved to backlog: [reason]"
+3. **Archive:** move any `✅ Done` contexts to `contexts/archive/`
+4. **Merge:** combine similar contexts if they overlap
+
+The `start-session` command will flag this automatically when >5 active contexts exist.
 
 ### Rule 5: Every Context Has a Branch (If Applicable)
 - Explorations: usually no branch
@@ -289,15 +298,19 @@ NEW PROBLEM/IDEA
     ↓
 Needs immediate work?
     NO  → contexts/backlog/[name].md
+            ↓
+        Promoted via start-session or switch-context
+            ↓
     YES → contexts/active/[type]_[name].md
             ↓
         Work across sessions
             ↓
         Update after EVERY session
             ↓
-        DONE     → contexts/archive/[date]_[name].md
-        BLOCKED  → Status: 🟡, work on something else
+        DONE      → contexts/archive/[date]_[name].md
+        BLOCKED   → Status: 🟡, work on something else
         ABANDONED → archive with reason
+        TOO MANY  → demote to contexts/backlog/ (>5 active)
 ```
 
 ---

@@ -26,9 +26,19 @@ Follow this process:
 
 ## Step 2: Identify Target Context
 
-1. **If target specified** ($ARGUMENTS): load that context file
-2. **If not specified**: list all active contexts and ask which one to switch to
-3. **Read target context file** — show current state and next steps
+1. **If target specified** ($ARGUMENTS): look for it in `contexts/active/` first, then `contexts/backlog/`
+2. **If not specified**: list all contexts from both active and backlog, grouped:
+   ```
+   🟢 Active contexts:
+   - [filename] — [outcome goal] — [status]
+
+   📋 Backlog contexts:
+   - [filename] — [outcome goal]
+
+   Switch to which one?
+   ```
+3. **If target is in backlog**: promote it first — move from `contexts/backlog/` → `contexts/active/`, set Status to 🟢 Active
+4. **Read target context file** — show current state and next steps
 
 ## Step 3: Switch
 

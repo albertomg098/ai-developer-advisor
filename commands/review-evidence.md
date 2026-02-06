@@ -219,14 +219,20 @@ If the user says yes to commit/PR:
 - Create PR with evidence summary in the description
 
 After commit/PR is done:
-```
-📦 Archive & Next
 
-1. Archive the context: move `contexts/active/[file]` → `contexts/archive/[file]`
-2. Pick your next task:
-   → Run `/ai-dev-advisor:start-session` to review remaining work and pick the next context.
-   → Run `/ai-dev-advisor:advisor` if you have something new to work on.
-```
+1. **Archive the context:** move `contexts/active/[file]` → `contexts/archive/[date]_[file]`
+
+2. **Check backlog:** Read `contexts/backlog/` for pending items.
+   - If backlog has items, show them:
+     ```
+     📋 Backlog has X items waiting:
+     - [filename] — [outcome goal]
+     - [filename] — [outcome goal]
+
+     Promote one to active? (Pick a number, or "no" to skip)
+     ```
+   - If user picks one: move it from `contexts/backlog/` → `contexts/active/`, set Status to 🟢 Active, and load it
+   - If backlog is empty: "Backlog is clear. Run `/ai-dev-advisor:advisor` when you have something new."
 
 ### If FAIL:
 

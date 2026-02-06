@@ -186,11 +186,12 @@ When the developer has multiple things going on:
 2. **Triage by priority:**
    - 🔴 CRITICAL (firefighting) → work on first
    - 🟡 IMPORTANT (exploration, building) → work on next
-   - 🟢 NICE-TO-HAVE (improving) → backlog
+   - 🟢 NICE-TO-HAVE (improving) → `contexts/backlog/` (don't start yet)
 3. **Choose parallel or sequential:**
    - **Parallel (worktrees):** Set up git worktrees, open Claude Code in each. Use `/ai-dev-advisor:setup-parallel`.
    - **Sequential (switching):** Work on ONE context per session, use context switching protocol.
-4. **Max 5–7 active contexts** — move extras to backlog
+4. **Max 5–7 active contexts** — demote extras to `contexts/backlog/` with `start-session`
+5. **Promote from backlog** when capacity opens — `start-session`, `switch-context`, and `review-evidence` all offer to promote backlog items at the right moments
 
 ---
 

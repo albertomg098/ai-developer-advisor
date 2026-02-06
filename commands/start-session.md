@@ -29,7 +29,22 @@ Follow this process:
     a) Pick ONE to focus on this session
     b) Set up parallel worktree sessions → `/ai-dev-advisor:setup-parallel`"
 
-4. **Show session checklist**:
+3c. **If >5 active contexts**, suggest demoting low-priority items:
+    "You have [N] active contexts (recommended max: 5–7). Consider moving lower-priority items to backlog:"
+    - List the least-recently-updated or lowest-priority active contexts
+    - Offer to move them: `contexts/active/[file]` → `contexts/backlog/[file]`
+
+4. **Show backlog summary**:
+   Read `contexts/backlog/` (if it exists and has files). Show:
+   ```
+   📋 Backlog: X items
+   - [filename] — [outcome goal from file]
+   - [filename] — [outcome goal from file]
+   ```
+   If any backlog item is now higher priority than active items, suggest promoting it:
+   "📌 [backlog item] may be ready to start. Promote to active?"
+
+5. **Show session checklist**:
    ```
    □ Know which context I'm working on
    □ Know my ONE outcome for this session
@@ -37,6 +52,8 @@ Follow this process:
    □ Have the context file open
    ```
 
-5. **Offer to start**: Ask which context to work on, then load it and show the "Next Session" steps.
+6. **Offer to start**: Ask which context to work on (from active or backlog), then:
+   - If active: load it and show the "Next Session" steps
+   - If backlog: move it to `contexts/active/`, set Status to 🟢 Active, then load it
 
 If the user specifies a context: $ARGUMENTS — load that context directly.

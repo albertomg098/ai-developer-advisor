@@ -17,17 +17,25 @@ Follow this process:
    - Success criteria (2–4 testable items)
    - Priority/urgency level
 
-3. **Create the context file** at `contexts/active/[type]_[name].md` using the template:
+3. **Decide placement — active or backlog:**
+   - If priority is urgent/high, or the user says "start now" → `contexts/active/`
+   - If priority is low, or the user says "later" / "not yet" / "someday" → `contexts/backlog/`
+   - If unclear, ask: "Start working on this now, or add to backlog for later?"
+   - Hotfixes always go to `contexts/active/` (they're urgent by definition)
+
+4. **Create the context file** at `contexts/[active|backlog]/[type]_[name].md` using the template:
    - Fill in Status, Started date, Outcome Goal, Success Criteria
    - Leave Session Log empty for first entry
    - Set up Evidence/Tests section with placeholder
 
-4. **Create supporting structure** if needed:
+5. **Create supporting structure** if needed:
    - `mkdir -p contexts/active contexts/backlog contexts/archive investigations`
    - For features: suggest `git checkout -b feature/[name]`
    - For hotfixes: suggest `git checkout -b hotfix/[name]`
    - For explorations: suggest creating `investigations/YYYYMMDD_[name].md`
 
-5. **Show next steps**: What the user should do first based on the context type.
+6. **Show next steps**:
+   - If created in **active**: What the user should do first based on the context type
+   - If created in **backlog**: "Added to backlog. Run `/ai-dev-advisor:start-session` when ready to promote it."
 
 User's description: $ARGUMENTS
