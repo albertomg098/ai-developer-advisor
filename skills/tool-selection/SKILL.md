@@ -2,8 +2,9 @@
 name: tool-selection
 description: >
   Decision guide for choosing between Claude Chat, Claude Code, and Plan mode.
-  Quick decision matrix, context-specific tool selection, and Chat-to-Code pipeline
-  patterns. Use when unsure which tool to apply or designing multi-phase workflows.
+  Quick decision matrix, context-specific tool selection, Chat-to-Code pipeline
+  patterns, and the research-first pipeline for unfamiliar technology.
+  Use when unsure which tool to apply or designing multi-phase workflows.
 ---
 
 # Tool Selection — Chat vs Code vs Plan Mode
@@ -148,6 +149,58 @@ Phase 4: REFINEMENT (Code)
 ├── "Apply review feedback: [list]"
 └── Final verification
 ```
+
+---
+
+## 🔬 The Research-First Pipeline
+
+### When to Use
+
+Use research-first when you hear signals like:
+- "I've never used [technology] before"
+- "I need to evaluate different approaches"
+- "I don't know which library to use"
+- "How does [pattern] work? I need to understand before building"
+- "This is new territory for me"
+
+The key signal: the developer knows **WHAT** to build but not **HOW** (technology/approach is unfamiliar).
+
+### 3-Phase Protocol
+
+```
+Phase 1: RESEARCH (Chat — no file access = focused thinking)
+├── Create context file (contexts/active/feature_[name].md)
+├── Build research prompt from template
+├── Run in Claude Chat → get findings
+└── PAUSE — user goes to Chat, returns with findings
+
+Phase 2: PLAN (Code — full codebase access)
+├── Receive pasted findings
+├── Update context file with research results
+├── Explore codebase — how does this fit?
+├── Design approach: architecture + test strategy + steps
+└── PAUSE — user approves plan
+
+Phase 3: IMPLEMENT (Code — test-first)
+├── Record approved plan in context file
+└── Hand off to test-first workflow
+```
+
+### Phase Transition Phrases
+
+Moving from Research → Plan:
+> "Here are my research findings: [paste from Chat]. Let's plan the implementation."
+
+Moving from Plan → Implement:
+> "Plan looks good. Let's implement it test-first."
+
+### Key Rules
+
+1. **Research happens in Chat** — no file access keeps focus on thinking, not premature coding
+2. **Plan and implement happen in Code** — needs codebase access for real design
+3. **Context file required first** — create before researching so findings have a home
+4. **Template saves time** — use `skills/tool-selection/templates/research-prompt.md` to build the Chat prompt
+5. **Don't skip to implementation** — the whole point is: understand first, build second
 
 ---
 

@@ -47,8 +47,60 @@ You are also an interactive development advisor. When I describe any task:
 - `/ai-dev-advisor:start-session` — begin work session, review active contexts
 - `/ai-dev-advisor:create-context` — create a context tracking file
 - `/ai-dev-advisor:test-first` — guided test-first implementation (3 phases)
+- `/ai-dev-advisor:research` — research-first workflow for unfamiliar technology
 - `/ai-dev-advisor:review-evidence` — check tests, coverage, and readiness
 - `/ai-dev-advisor:switch-context` — checkpoint current work, switch tasks
+
+### Context-Driven Workflow Rules
+
+#### RULE 1: Auto-detect active context
+At the START of every session, check the current git branch. If it matches a context file's `Feature Branch` field in `contexts/active/*.md`, automatically read that context file and announce:
+> "Loaded context: [context name]. Current phase: [phase]. Last session: [date from log]."
+
+If no branch matches, list available contexts and ask which one to work on.
+
+#### RULE 2: Auto-update context files (MANDATORY)
+After EVERY significant action, update the relevant context file in `contexts/active/`:
+- **Check/uncheck Phase checkboxes** as tasks are completed (`- [x]`)
+- **Append to Session Log** with dated entry summarizing what was done
+- **Update Diagnosis** if the phase changes (e.g., 🔍→📋→🏗️)
+- **Record decisions** under the chosen approach when a decision is made
+
+This is NOT optional. The context file is the living record. Update it automatically without being asked.
+
+#### RULE 3: Research handoff from Chat
+When the user pastes research findings (from Claude Chat or elsewhere), immediately:
+1. Read the matching context file
+2. Update Phase 1 checkboxes based on what was researched
+3. Add findings to the Session Log with today's date
+4. Summarize what Phase 1 items remain (if any)
+5. Ask: "Ready to move to Phase 2: PLAN, or more research needed?"
+
+> 💡 **Tip:** Use `/ai-dev-advisor:research` to get a structured research prompt for Claude Chat before starting.
+
+#### RULE 4: Plan mode activation
+When the user says "plan" or "Phase 2" or "let's design the approach":
+1. Read the context file
+2. Enter plan mode (EnterPlanMode)
+3. Explore all Key Files listed in the context
+4. Design approach considering the research findings in the Session Log
+5. Write the plan to the context file under a new `## Approved Plan` section
+6. On approval: update context Phase 2 checkboxes, log the decision
+
+#### RULE 5: Implementation with test-first
+When the user says "implement" or "Phase 3" or approves the plan:
+1. Read the context file (get the approved plan)
+2. Write failing tests FIRST (use `/ai-dev-advisor:test-first`)
+3. Run tests — confirm they fail (red)
+4. Implement — make tests pass (green)
+5. After EACH test passing: update context checkboxes and session log
+6. Run full test suite at the end
+
+#### RULE 6: Session end
+When the user says "stop", "pause", "done for now", or ends the session:
+1. Update context file with final status
+2. Add Session Log entry: what was done, what's next
+3. Show a summary of progress
 ```
 
 ## Step 4: Create Directory Structure

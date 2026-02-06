@@ -84,6 +84,7 @@ Slash commands for common workflows. Available via `/ai-dev-advisor:<name>`:
 | `/ai-dev-advisor:start-session` | Begin work session — review active contexts, recommend focus |
 | `/ai-dev-advisor:create-context` | Generate a new context tracking file from template |
 | `/ai-dev-advisor:test-first` | Guided test-first implementation (3 phases with pauses) |
+| `/ai-dev-advisor:research` | Research-first workflow for unfamiliar technology (3 phases with pauses) |
 | `/ai-dev-advisor:review-evidence` | Run tests, check coverage, assess pyramid, report readiness |
 | `/ai-dev-advisor:switch-context` | Checkpoint current work, switch to different context |
 | `/ai-dev-advisor:setup-advisor` | Install advisor into a project — appends to CLAUDE.md, creates dirs |
@@ -130,13 +131,17 @@ ai-dev-advisor/                       ← Plugin root
 │   │       ├── context-file.md
 │   │       ├── investigation-file.md
 │   │       └── session-checklist.md
-│   └── tool-selection/SKILL.md
+│   └── tool-selection/
+│       ├── SKILL.md
+│       └── templates/
+│           └── research-prompt.md
 ├── commands/                         ← Slash commands (/ai-dev-advisor:*)
 │   ├── advisor.md
 │   ├── diagnose.md
 │   ├── start-session.md
 │   ├── create-context.md
 │   ├── test-first.md
+│   ├── research.md
 │   ├── review-evidence.md
 │   ├── switch-context.md
 │   └── setup-advisor.md
@@ -174,6 +179,7 @@ Or use a command directly:
 - `/ai-dev-advisor:diagnose` — identify your context
 - `/ai-dev-advisor:start-session` — begin a work session
 - `/ai-dev-advisor:test-first` — implement something test-first
+- `/ai-dev-advisor:research` — research unfamiliar tech before building
 
 ---
 

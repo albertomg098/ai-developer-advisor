@@ -41,9 +41,13 @@ Q1: Is production down or users affected RIGHT NOW?
     NO  → Q2
 
 Q2: Do you know what's wrong and how to fix/build it?
-    YES, it's new     → 🏗️ BUILDING
+    YES, it's new     → Q2.5
     YES, it's broken  → 🔥 FIREFIGHTING
     NO                → Q3
+
+Q2.5: Do you know the technology/approach, or need to research first?
+    KNOW IT        → 🏗️ BUILDING (test-first)
+    NEED RESEARCH  → 🏗️ BUILDING (research-first pipeline)
 
 Q3: Is something broken/weird but not urgent?
     YES → 🔍 EXPLORATION
@@ -121,14 +125,15 @@ contexts/active/hotfix_[bug].md
 ### Steps
 1. **Create feature context** → `contexts/active/feature_[name].md`
 2. **Create feature branch** → `feature/[name]`
-3. **Design** (Chat) — API spec, data models, test scenarios
-4. **Phase 1: Tests** — write comprehensive tests (should FAIL)
-5. **Phase 2: Implement** — make tests PASS, nothing more
-6. **Phase 3: Verify** — full suite, coverage >80%, no regressions
-7. **Review** — check for security, edge cases, performance
-8. **Harden** — apply review feedback, add missing tests
-9. **Document** — update docs, add docstrings
-10. **Merge** — to main, archive context
+3. **Research** (if unfamiliar tech) — use research-first pipeline: Chat → findings → plan
+4. **Design** (Chat) — API spec, data models, test scenarios
+5. **Phase 1: Tests** — write comprehensive tests (should FAIL)
+6. **Phase 2: Implement** — make tests PASS, nothing more
+7. **Phase 3: Verify** — full suite, coverage >80%, no regressions
+8. **Review** — check for security, edge cases, performance
+9. **Harden** — apply review feedback, add missing tests
+10. **Document** — update docs, add docstrings
+11. **Merge** — to main, archive context
 
 ### Key Rules
 - Tests BEFORE implementation, always
@@ -212,6 +217,7 @@ When advising, follow this 5-step pattern:
 - "Do you know what's causing this, or are you investigating?"
 - "Do you have clear requirements, or do you need to explore first?"
 - "Is this a new capability or an improvement to existing code?"
+- "Are you familiar with the technology, or do you need to research approaches first?"
 - "How many active work items are you juggling?"
 
 ---
@@ -224,7 +230,8 @@ After diagnosing the context, route to:
 |---------|-------|---------|
 | 🔍 EXPLORATION | — | `/ai-dev-advisor:diagnose` |
 | 🔥 FIREFIGHTING | — | `/ai-dev-advisor:diagnose` |
-| 🏗️ BUILDING | `test-first` | `/ai-dev-advisor:test-first` |
+| 🏗️ BUILDING (familiar tech) | `test-first` | `/ai-dev-advisor:test-first` |
+| 🏗️ BUILDING (needs research) | `tool-selection` | `/ai-dev-advisor:research` |
 | ✨ IMPROVING | `test-first` | `/ai-dev-advisor:review-evidence` |
 | Multiple | `context-management` | `/ai-dev-advisor:start-session` |
 
