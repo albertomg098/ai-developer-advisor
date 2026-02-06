@@ -9,7 +9,7 @@ An opinionated Claude Code plugin that turns Claude into an interactive AI devel
 This is a **Claude Code plugin** that provides:
 
 - **4 Skills** that teach Claude Code evidence-driven development methodology
-- **8 Slash Commands** for common advisor workflows (`/ai-dev-advisor:advisor`, `/ai-dev-advisor:test-first`, etc.)
+- **9 Slash Commands** for common advisor workflows (`/ai-dev-advisor:advisor`, `/ai-dev-advisor:test-first`, etc.)
 - **Templates** for context tracking, investigations, and test-first development
 - **Documentation** — a 7-day learning path for developers
 
@@ -78,6 +78,7 @@ Use these via `/ai-dev-advisor:<name>` in Claude Code:
 | `/ai-dev-advisor:start-session` | Begin a work session — review active contexts, get session checklist |
 | `/ai-dev-advisor:create-context` | Generate a context tracking file from template |
 | `/ai-dev-advisor:test-first` | Guided test-first implementation in 3 phases with pauses |
+| `/ai-dev-advisor:research` | Research-first workflow for unfamiliar technology (3 phases with pauses) |
 | `/ai-dev-advisor:review-evidence` | Run tests, check coverage, assess evidence pyramid, report readiness |
 | `/ai-dev-advisor:switch-context` | Checkpoint current work, switch to a different context cleanly |
 | `/ai-dev-advisor:setup-advisor` | Set up the advisor in a project — appends to CLAUDE.md, creates directories |
@@ -93,7 +94,7 @@ Skills live in `skills/` and are automatically available when the plugin is inst
 | **dev-advisor** | Diagnosis decision trees, 4 development contexts, advisory patterns, workflow routing |
 | **test-first** | Evidence pyramid, red-green-refactor, test levels, universal prompt templates |
 | **context-management** | Context file system, naming conventions, switching protocol, daily workflow |
-| **tool-selection** | Chat vs Code vs Plan decision matrix, context-specific tool selection |
+| **tool-selection** | Chat vs Code vs Plan decision matrix, context-specific tool selection, research-first pipeline |
 
 ---
 
@@ -105,7 +106,7 @@ The framework categorizes every task into one of four contexts:
 |---------|-----------------|----------|
 | 🔍 **EXPLORATION** | "I don't know what's wrong" | Hypothesis → test → document → repeat |
 | 🔥 **FIREFIGHTING** | "Production is broken, fix NOW" | Reproduce → minimal fix → verify → deploy |
-| 🏗️ **BUILDING** | "I know what to build" | Tests FAIL → implement → tests PASS → verify |
+| 🏗️ **BUILDING** | "I know what to build" | Research (if needed) → Tests FAIL → implement → tests PASS → verify |
 | ✨ **IMPROVING** | "It works, but could be better" | Baseline → improve → measure → verify |
 
 ---
@@ -114,9 +115,10 @@ The framework categorizes every task into one of four contexts:
 
 1. **Describe your situation** — tell Claude what you're trying to do
 2. **Get diagnosed** — the framework identifies your context
-3. **Follow the protocol** — test-first, evidence-driven, step by step
-4. **Track progress** — context files in `contexts/active/` persist across sessions
-5. **Ship with confidence** — tests prove it works before you commit
+3. **Research if needed** — unfamiliar tech? Research in Chat first, then plan in Code
+4. **Follow the protocol** — test-first, evidence-driven, step by step
+5. **Track progress** — context files in `contexts/active/` persist across sessions
+6. **Ship with confidence** — tests prove it works before you commit
 
 ### Multiple Contexts, Multiple Sessions
 
@@ -153,13 +155,17 @@ ai-dev-advisor/
 │   │       ├── context-file.md
 │   │       ├── investigation-file.md
 │   │       └── session-checklist.md
-│   └── tool-selection/SKILL.md
-├── commands/                         ← 8 slash commands (/ai-dev-advisor:*)
+│   └── tool-selection/
+│       ├── SKILL.md
+│       └── templates/
+│           └── research-prompt.md
+├── commands/                         ← 9 slash commands (/ai-dev-advisor:*)
 │   ├── advisor.md
 │   ├── diagnose.md
 │   ├── start-session.md
 │   ├── create-context.md
 │   ├── test-first.md
+│   ├── research.md
 │   ├── review-evidence.md
 │   ├── switch-context.md
 │   └── setup-advisor.md
