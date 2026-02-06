@@ -40,4 +40,25 @@ Follow the three-phase process with explicit pauses between phases:
    - Uncovered code paths
 4. **Verdict**: Feature is DONE or needs more work
 
+---
+
+## PHASE 3.5 — CONTEXT UPDATE & NEXT STEP
+
+After Phase 3 verification completes:
+
+1. **Update context file** (if one exists for the current branch):
+   - Check `git branch --show-current` and look for a matching context in `contexts/active/`
+   - If found, check off the implementation and verification checkboxes as `[x]`
+   - Append to the Session Log:
+     ```
+     ### Session YYYY-MM-DD — Test-First Implementation
+     **Action:** Completed Phases 1–3 (test spec → implement → verify)
+     **Results:** X tests passing, XX% coverage, X regressions
+     **Verdict:** [DONE / needs more work]
+     ```
+
+2. **Route to next step:**
+   - If DONE → "Run `/ai-dev-advisor:review-evidence` to validate all evidence gates before shipping."
+   - If needs more work → List what's missing and suggest specific actions to address each gap.
+
 Feature/fix description: $ARGUMENTS

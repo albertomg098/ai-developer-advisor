@@ -218,6 +218,16 @@ If the user says yes to commit/PR:
 - Commit with a descriptive message referencing the evidence
 - Create PR with evidence summary in the description
 
+After commit/PR is done:
+```
+📦 Archive & Next
+
+1. Archive the context: move `contexts/active/[file]` → `contexts/archive/[file]`
+2. Pick your next task:
+   → Run `/ai-dev-advisor:start-session` to review remaining work and pick the next context.
+   → Run `/ai-dev-advisor:advisor` if you have something new to work on.
+```
+
 ### If FAIL:
 
 Show what's missing and suggest specific fixes:
