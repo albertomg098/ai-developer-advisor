@@ -1,6 +1,9 @@
 {
     "name": "ai-dev-advisor-marketplace",
     "description": "Official marketplace for the AI Dev Advisor plugin",
+    "owner": {
+        "name": "Alberto Martin"
+    },
     "plugins": [
         {
             "name": "ai-dev-advisor",
