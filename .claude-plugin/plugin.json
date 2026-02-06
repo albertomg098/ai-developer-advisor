@@ -1,0 +1,13 @@
+{
+  "name": "ai-dev-advisor",
+  "description": "Interactive AI development advisor. Diagnoses development contexts (exploration, firefighting, building, improving), enforces test-first discipline, and tracks progress across sessions with context files.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Alberto Martin"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/albertomartin/claude-code-mental-model"
+  },
+  "license": "MIT"
+}

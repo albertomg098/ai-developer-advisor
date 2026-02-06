@@ -1,0 +1,47 @@
+Switch from the current development context to a different one.
+
+Read the skill at `skills/context-management/SKILL.md` for the switching protocol.
+
+Follow this process:
+
+## Step 1: Checkpoint Current Work
+
+1. **Check for uncommitted changes**: `git status`
+2. **If changes exist**:
+   - Stage and commit as WIP: `git add . && git commit -m "WIP: [context] — switching to [target]"`
+   - Or stash: `git stash`
+3. **Update current context file**:
+   - Set Status to 🟡 PAUSED
+   - Add: "Paused at: [timestamp]"
+   - Add: "State: [what's in progress]"
+   - Add: "Resume point: [exact next steps when returning]"
+
+## Step 2: Identify Target Context
+
+1. **If target specified** ($ARGUMENTS): load that context file
+2. **If not specified**: list all active contexts and ask which one to switch to
+3. **Read target context file** — show current state and next steps
+
+## Step 3: Switch
+
+1. **Switch git branch** if applicable:
+   - `git checkout [target-branch]`
+   - Or `git stash pop` if resuming stashed work
+2. **Update target context file**:
+   - Set Status to 🟢 Active (resumed)
+   - Add: "Resumed at: [timestamp]"
+3. **Show the "Next Session" section** from the target context
+
+## Step 4: Confirm
+
+Show summary:
+```
+## Context Switch Complete
+
+**From:** [previous context] → Status: 🟡 PAUSED
+**To:** [new context] → Status: 🟢 Active
+**Branch:** [current branch]
+**Next step:** [first action from context file]
+```
+
+Target context: $ARGUMENTS

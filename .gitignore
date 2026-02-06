@@ -1,0 +1,17 @@
+# User-generated data
+contexts/
+investigations/
+
+# Local settings
+.claude/settings.local.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
