@@ -174,6 +174,7 @@ Show evidence at each phase."
 # Directory structure
 mkdir -p contexts/{active,backlog,archive}
 mkdir -p investigations
+mkdir -p evidence
 mkdir -p tests/{unit,integration,e2e,fixtures}
 
 # Create context template

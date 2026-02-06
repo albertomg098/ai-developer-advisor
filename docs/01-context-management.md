@@ -22,6 +22,8 @@ your-project/
 │   ├── active/       ← Currently working on (2-5 files typically)
 │   ├── backlog/      ← Planned but not started
 │   └── archive/      ← Completed or abandoned
+├── evidence/         ← Validation evidence files
+├── investigations/   ← Exploration logs
 └── docs/             (architecture, specs, etc.)
 ```
 

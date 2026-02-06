@@ -127,8 +127,11 @@ These commands are included and ready to use:
 | `/ai-dev-advisor:start-session` | Begin work session | List active contexts → recommend focus → checklist |
 | `/ai-dev-advisor:create-context` | Generate context file | Ask type/goal → create from template → suggest branch |
 | `/ai-dev-advisor:test-first` | Test-first implementation | Phase 1: tests → Phase 2: implement → Phase 3: verify |
-| `/ai-dev-advisor:review-evidence` | Verify test coverage | Run tests → coverage → pyramid check → readiness report |
+| `/ai-dev-advisor:research` | Research-first workflow | For unfamiliar tech — 3 phases with pauses |
+| `/ai-dev-advisor:review-evidence` | Full validation gate | Tests → real inputs → evidence file → context update → ship |
 | `/ai-dev-advisor:switch-context` | Switch work context | Checkpoint → commit WIP → update → load new context |
+| `/ai-dev-advisor:setup-advisor` | Set up advisor in project | Appends to CLAUDE.md → creates directories |
+| `/ai-dev-advisor:setup-parallel` | Parallel worktree sessions | Set up git worktrees for multiple simultaneous tasks |
 
 ### Using Commands
 
@@ -279,12 +282,12 @@ Make all executable and test them."
 # 3. SKILL: Claude applies test-first methodology automatically
 # (dev-advisor and test-first skills guide the process)
 
-# 4. COMMAND: Verify evidence
+# 4. COMMAND: Full validation gate
 /ai-dev-advisor:review-evidence
+# Runs tests, validates real inputs, writes evidence file,
+# updates context, and asks: "Commit and create PR?"
 
-# 5. HOOK: Commit — pre-commit hook enforces quality
-git commit -m "feat(export): bulk CSV export with tests"
-# Hook: tests pass ✅, coverage >80% ✅, format ok ✅
+# 5. You say "yes" → committed, PR created, context archived
 ```
 
 ---

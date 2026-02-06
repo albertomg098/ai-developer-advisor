@@ -639,45 +639,41 @@ claude "Complete any missing pieces for E2E test to pass
 # Verify E2E passes
 pytest tests/e2e/test_[feature]_flow.py -v
 
-# PHASE 9: FULL VERIFICATION (Code)
-claude "Run complete test suite with coverage:
+# PHASE 9: FULL VALIDATION GATE
+# Run the complete evidence review — this does everything:
+# tests, real inputs, before/after, evidence file, context update
+/ai-dev-advisor:review-evidence
 
-Commands to run:
-1. pytest tests/ -v (all tests)
-2. pytest tests/ --cov=src --cov-report=html
-3. Show me coverage report
-4. Identify any gaps"
+# review-evidence will:
+# 1. Run full test suite with coverage
+# 2. Validate against real inputs in tests/fixtures/
+# 3. Compare before/after with baselines
+# 4. Write evidence/[context]-validation.md (COMPLETE output)
+# 5. Update context file (check off Phase 3, add session log)
+# 6. Ask: "Commit and create PR?"
 
-# PHASE 10: REVIEW (Chat)
-[CHAT] Upload: Coverage report, test results, new code
+# PHASE 10: REVIEW (Chat — if needed)
+[CHAT] Upload: evidence/[context]-validation.md
 
-"Review this implementation:
+"Review this evidence report:
 1. Is test coverage adequate?
 2. Are there edge cases not tested?
 3. Are there security concerns?
-4. Are there performance issues?
 
 Provide specific recommendations"
 
-# PHASE 11: HARDENING (Code)
+# PHASE 11: HARDENING (Code — if review found issues)
 claude "Based on review feedback:
 [list specific improvements]
 
 Add tests for any new scenarios identified"
 
-# PHASE 12: DOCUMENTATION (Code)
-claude "Update documentation:
-1. Add docstrings to public functions
-2. Update API_SPEC.yaml if API changed
-3. Update README.md with new feature
-4. Add examples to docs/EXAMPLES.md"
+# Then re-run the validation gate:
+/ai-dev-advisor:review-evidence
 
-# PHASE 13: FINAL VERIFICATION (Code)
-pytest tests/ -v --cov=src --cov-report=term
-# Everything passes, >80% coverage
-
-git add .
-git commit -m "feat: [feature] with comprehensive tests"
+# PHASE 12: SHIP
+# When review-evidence says PASS and you approve,
+# it commits, creates PR, and archives the context
 ```
 
 ---

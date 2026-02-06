@@ -409,43 +409,21 @@ claude "Complete any wiring needed for E2E test"
 pytest tests/e2e/test_[feature]_flow.py -v
 # Should pass
 
-# Step 13: Full verification (CODE - 10 minutes)
-pytest tests/ -v --cov=src --cov-report=term
+# Step 13: Full validation gate
+# This runs tests, validates real inputs, writes evidence,
+# updates context, and offers to commit/PR — all in one command
+/ai-dev-advisor:review-evidence
 
-# Step 14: Review (CHAT - 10 minutes)
-[CHAT] Upload: git diff, coverage report
-"Review this implementation for issues"
+# If PASS: review-evidence offers to commit and create PR
+# If FAIL: shows gaps and suggests fixes — fix them, then re-run
 
-# Step 15: Hardening (CODE - 20 minutes)
-claude "Based on review, address:
-[list issues from review]"
+# Step 14: Review (CHAT - optional, if you want extra eyes)
+[CHAT] Upload: evidence/[context]-validation.md
+"Review this evidence report for issues"
 
-# Step 16: Documentation (CODE - 10 minutes)
-claude "Update:
-- README.md (feature description)
-- docs/API_SPEC.yaml (if API changed)
-- Docstrings in code"
-
-# Step 17: Final verification
-pytest tests/ -v
-# All pass
-
-# Step 18: Update context
-claude "Update contexts/active/feature_[name].md:
-Status: ✅ COMPLETE
-Completed: [timestamp]
-Tests: All passing
-Coverage: [percentage]
-Next: Merge to main"
-
-# Step 19: Merge
-git checkout main
-git merge feature/[name]
-git push
-
-# Step 20: Archive context
-mv contexts/active/feature_[name].md \
-   contexts/archive/$(date +%Y%m%d)_[name]_complete.md
+# Step 15: Ship
+# When review-evidence says PASS and you approve,
+# it commits, creates PR, and archives the context
 
 # ===== SESSION END =====
 ```
@@ -558,47 +536,20 @@ pytest tests/e2e/test_export_flow.py -v
 
 git commit -m "feat(export): complete E2E workflow"
 
-# Step 10: Verification
-pytest tests/ -v --cov=src --cov-report=term
-# All tests pass, coverage 85%
+# Step 10: Full validation gate
+/ai-dev-advisor:review-evidence
+# Runs tests, validates fixtures, writes evidence/feature_csv_export-validation.md,
+# updates context, asks to commit/PR
 
-# Step 11: Review
-[CHAT] Upload: git diff, coverage report
-"Review CSV export implementation"
-
-# CHAT identifies: "Add rate limiting on export endpoint"
-
-# Step 12: Add rate limiting
+# If review identifies gaps (e.g., "Add rate limiting"):
 claude "Add rate limiting to export endpoint:
 - Max 10 exports per hour per user
 - Return 429 if exceeded
 - Add test for rate limiting"
 
-pytest tests/integration/test_export_api.py -v
-# Still all passing, new test added
-
-git commit -m "feat(export): add rate limiting"
-
-# Step 13: Documentation
-claude "Update:
-- README.md: Add CSV export to features
-- docs/API_SPEC.yaml: Add /api/users/export endpoint
-- Add docstrings to csv_generator.py and export.py"
-
-git commit -m "docs: CSV export documentation"
-
-# Step 14: Complete
-claude "Update contexts/active/feature_bulk_csv_export.md:
-Status: ✅ COMPLETE
-All tests: ✅ Passing
-Coverage: 85%
-Deployed: Ready to merge"
-
-# Merge and archive
-git checkout main
-git merge feature/bulk-csv-export
-mv contexts/active/feature_bulk_csv_export.md \
-   contexts/archive/20250205_csv_export_complete.md
+# Re-run validation gate
+/ai-dev-advisor:review-evidence
+# PASS → "Commit and create PR?" → yes → done
 
 # FEATURE DONE
 ```
@@ -660,20 +611,10 @@ claude "Measure after improvement:
 
 Save to contexts/active/improve_[name].md under '## After'"
 
-# Step 7: Verify no regressions (CODE - 5 minutes)
-pytest tests/ -v
-# All must still pass
-
-# Step 8: Update context
-claude "Update contexts/active/improve_[name].md:
-Status: ✅ COMPLETE
-Before: [metrics]
-After: [metrics]
-Improvement: [percentage or description]"
-
-# Step 9: Archive
-mv contexts/active/improve_[name].md \
-   contexts/archive/$(date +%Y%m%d)_[name]_improved.md
+# Step 7: Full validation gate
+/ai-dev-advisor:review-evidence
+# Runs tests, compares before/after baselines, writes evidence,
+# updates context to ✅ Done, offers to commit/PR
 
 # ===== SESSION END =====
 ```

@@ -95,6 +95,8 @@ contexts/
 │   └── refactor_api_layer.md
 └── archive/                   ← Completed/abandoned
     └── 2025-02-05_voice_wav_fixed.md
+evidence/                      ← Validation evidence files
+investigations/                ← Exploration logs
 ```
 
 **The rule:** Work on ONE context per session, but maintain ALL active contexts.
@@ -241,7 +243,7 @@ After internalizing this Quick Start, read in order:
 ## 🎯 Your First Week Checklist
 
 ### Day 1: Setup
-- [ ] Create `contexts/active/`, `contexts/backlog/`, `contexts/archive/`
+- [ ] Create `contexts/active/`, `contexts/backlog/`, `contexts/archive/`, `evidence/`
 - [ ] Read this file 3 times
 - [ ] Do one practice session (any context)
 
