@@ -133,7 +133,7 @@ contexts/active/hotfix_[bug].md
 4. **Design** (Chat) — API spec, data models, test scenarios
 5. **Phase 1: Tests** — write comprehensive tests (should FAIL)
 6. **Phase 2: Implement** — make tests PASS, nothing more
-7. **Phase 3: Verify** — full suite, coverage >80%, no regressions
+7. **Phase 3: Verify** — full suite, coverage >80%, no regressions + QA validation
 8. **Review** — check for security, edge cases, performance
 9. **Harden** — apply review feedback, add missing tests
 10. **Document** — update docs, add docstrings
@@ -162,7 +162,7 @@ contexts/active/feature_[name].md
 3. **Baseline measurement** — benchmark current state
 4. **Make improvement** — all existing tests must still pass
 5. **After measurement** — same metrics, show improvement
-6. **Verify** — no regressions in full test suite
+6. **Verify** — no regressions in full test suite + QA validation (if applicable)
 7. **Archive** — document before/after metrics
 
 ### Key Rules

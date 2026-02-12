@@ -81,6 +81,7 @@
 - [ ] Integration tests pass
 - [ ] No regressions
 - [ ] Coverage >80%
+- [ ] QA validation passes (if applicable)
 
 ---
 

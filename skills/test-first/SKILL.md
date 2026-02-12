@@ -239,6 +239,7 @@ After ANY implementation, verify:
 □ Coverage adequate: pytest tests/ --cov=[module] --cov-report=term-missing (>80%)
 □ No regressions: pytest tests/ -v (all old tests still pass)
 □ Integration works: pytest tests/integration/ -v
+□ QA validation: app runs and works live (if applicable — N/A for libraries)
 
 IF ANY FAIL → Feature is NOT done.
 ```
@@ -268,6 +269,7 @@ Evidence needed: full test pyramid
 - E2E test passes
 - Coverage >80%
 - All existing tests pass
+- QA validation passes (for runnable apps)
 
 ### ✨ IMPROVING
 Evidence needed: before/after measurements
@@ -287,6 +289,7 @@ Evidence needed: before/after measurements
 3. ✅ Coverage >80% for new code
 4. ✅ Integration tests for multi-component features
 5. ✅ No regressions
+6. ✅ QA validation for runnable apps (API/frontend/CLI)
 
 ---
 
@@ -302,6 +305,7 @@ Phase 6:  INTEGRATION IMPL → Code: tests should PASS → commit
 Phase 7:  E2E TESTS        → Code: tests should FAIL
 Phase 8:  E2E COMPLETION   → Code: tests should PASS → commit
 Phase 9:  FULL VERIFY      → Code: pytest tests/ -v --cov=src
+Phase 9.5: QA VALIDATE    → Code: start app, curl/test live, fix QA bugs
 Phase 10: REVIEW           → Chat: review code + coverage
 Phase 11: HARDEN           → Code: apply feedback, add tests
 Phase 12: DOCUMENTATION    → Code: docstrings, API docs

@@ -102,7 +102,7 @@ Compare current results against baselines:
 3. **If no baselines exist:**
    - Note: "📌 No baselines found — establishing current output as first baseline"
    - Save current outputs as the baseline for future comparison
-   - Proceed to Step 5
+   - Proceed to Step 5 (QA) or Step 6 (Evidence)
 
 Report:
 ```
@@ -116,7 +116,138 @@ Regressions: X | Improvements: X | Unchanged: X
 
 ---
 
-## Step 5: WRITE EVIDENCE FILE
+## Step 5: QA VALIDATION
+
+Validate the application works live — not just in test harnesses, but as a real running deployment artifact.
+
+### 5a. Determine if QA applies
+
+Detect the app type using this decision tree:
+
+1. **Check `docker-compose.yml` / `Dockerfile` with EXPOSE**
+   → FOUND: 🐳 DOCKER (`docker compose up -d`, test via curl, `docker compose down`)
+
+2. **Check `package.json` "workspaces" / `lerna.json` / `pnpm-workspace.yaml`**
+   → FOUND: 📦 MONOREPO → ask user: "Which package should I QA? [list packages with start scripts]"
+
+3. **Check `package.json` scripts + dependencies:**
+   → `dev`/`start` with next/vite/react-scripts/angular → 🖥️ FRONTEND
+   → `start` with express/fastify/nest/hono/koa → 🌐 API
+   → `bin` field present → ⌨️ CLI
+   → Multiple matches → QA each type sequentially
+
+4. **Check Python project:**
+   → uvicorn/gunicorn/flask/django in deps → 🌐 API
+   → console_scripts / argparse / click / typer → ⌨️ CLI
+
+5. **Check `Makefile` for run/serve/start/dev targets**
+   → FOUND: use that target
+
+6. **Nothing detected:**
+   → Only `src/` + `tests/` with no entry point → 📦 LIBRARY (skip QA)
+   → Otherwise: ask user "How do you start this app? [provide the start command]"
+
+- If LIBRARY: `📦 Library detected — QA not applicable. Skipping to Step 6.` → go to Step 6.
+- If app type found: proceed to 5b.
+
+### 5b. Start the application
+
+Execute via bash commands:
+
+1. Find start command from detection above
+2. Start in background, capture PID: `<start-command> & APP_PID=$!`
+3. Poll for readiness (max 30s, 1s intervals):
+   ```bash
+   for i in {1..30}; do
+     curl -s -o /dev/null -w "%{http_code}" http://localhost:PORT/ | grep -q "200" && break
+     sleep 1
+   done
+   ```
+4. If server fails to start after 30s: record as QA FAIL with the startup error
+
+### 5c. Test via bash — protocol per app type
+
+**🌐 API Protocol:**
+1. Identify which endpoints to test:
+   - Run `git diff [base-branch]...HEAD --name-only` to get changed files
+   - Read each changed file looking for route definitions (decorators like `@app.route`, `@router.get`, or registrations like `app.get('/path', handler)`)
+   - If no routes found in changed files, check if changed files are imported by route files (grep for the module name in route/controller files)
+   - Also always test: `GET /` or `GET /health` as a baseline
+2. For each identified endpoint, run 2-3 curl checks:
+   ```bash
+   # Happy path — valid request
+   curl -s -w "\n%{http_code}" -X POST http://localhost:PORT/api/resource \
+     -H "Content-Type: application/json" -d '{"field": "value"}'
+   # → Check: status code matches expected (200/201/etc), response body is valid JSON
+
+   # Error path — invalid input
+   curl -s -w "\n%{http_code}" -X POST http://localhost:PORT/api/resource \
+     -H "Content-Type: application/json" -d '{}'
+   # → Check: status code is 400/422, response contains error message
+
+   # Auth path (if endpoint requires auth) — missing token
+   curl -s -w "\n%{http_code}" -X GET http://localhost:PORT/api/protected
+   # → Check: status code is 401/403
+   ```
+3. For each check: compare actual status code and response shape against what the route handler's code says it should return
+
+**🖥️ Frontend Protocol (3 tiers — use the highest available):**
+
+| Tier | Tool | What It Tests |
+|------|------|---------------|
+| **Full** | Playwright MCP | Interactive flows, visual state, JS errors, screenshots |
+| **Standard** | `curl` + bash | Server starts, responds with HTML, contains expected elements |
+| **Minimal** | Build check only | `npm run build` succeeds, output files exist, no errors in build log |
+
+1. **Minimal (always):** Run `npm run build` (or equivalent). Verify exit code 0, output directory exists, no error strings in build log.
+2. **Standard (if dev server available):** `curl -s http://localhost:PORT/` — verify HTTP 200 and response body contains expected HTML markers (`<div id="root">`, `<title>`, no "Error" or "Cannot GET"). `curl` each route that corresponds to changed page components (e.g., changed `pages/settings.tsx` → curl `/settings`).
+3. **Full (if Playwright MCP available):** Navigate to affected pages, interact with changed UI elements, verify visual state, check browser console for JS errors, take screenshots.
+
+**⌨️ CLI Protocol:**
+```bash
+# Help text works
+./cli --help  # → exits 0, outputs usage text
+
+# Happy path
+./cli process input.txt  # → exits 0, outputs expected result
+
+# Error path
+./cli process nonexistent.txt  # → exits non-zero, outputs helpful error message
+```
+
+**🐳 Docker Protocol:**
+```bash
+docker compose up -d
+# Wait for health check
+for i in {1..30}; do
+  curl -s http://localhost:PORT/health > /dev/null && break
+  sleep 1
+done
+# Then run API or Frontend protocol above
+# Cleanup
+docker compose down
+```
+
+### 5d. Report + cleanup
+
+1. Kill background processes: `kill $APP_PID`, `docker compose down` if used
+2. Generate QA report:
+
+```
+## 🌐 QA Validation
+
+**App type:** [detected type]
+**Start command:** [command used]
+**QA status:** ✅ PASS / ❌ FAIL / ⚠️ PARTIAL
+
+| Check | Result | Notes |
+|-------|--------|-------|
+| [check name] | ✅/❌ | [details] |
+```
+
+---
+
+## Step 6: WRITE EVIDENCE FILE
 
 Create the `evidence/` directory if it doesn't exist.
 
@@ -148,6 +279,19 @@ Write `evidence/[context-name]-validation.md` with the COMPLETE report:
 
 [Full comparison table from Step 4 — NEVER summarize]
 
+## QA Validation
+
+[Full QA results from Step 5. Write "N/A — library" if QA was skipped. Use this format:]
+
+**App type:** [detected type]
+**QA status:** ✅ PASS / ❌ FAIL / ⚠️ PARTIAL (X/Y checks passing after N fix cycles)
+
+| Check | Result | Notes |
+|-------|--------|-------|
+| [check name] | ✅/❌ | [details] |
+
+**QA-fix cycles:** [N] | **Bugs found:** [X] | **Fixed:** [Y] | **Remaining:** [Z]
+
 ## Evidence Pyramid Assessment
 
 - [x/blank] Requirements documented
@@ -158,10 +302,11 @@ Write `evidence/[context-name]-validation.md` with the COMPLETE report:
 - [x/blank] Coverage >80%
 - [x/blank] No regressions
 - [x/blank] Real inputs validated
+- [x/blank] QA validation passes (if applicable)
 
-## Verdict: PASS / FAIL
+## Verdict: PASS / FAIL / PASS WITH CAVEATS
 
-**Reason:** [If FAIL — list every failing gate. If PASS — confirm all gates met.]
+**Reason:** [If FAIL — list every failing gate. If PASS — confirm all gates met. If PASS WITH CAVEATS — list known issues documented for follow-up.]
 ```
 
 **IMPORTANT:** Show COMPLETE output in every section. Never summarize, truncate, or abbreviate. The evidence file is the proof — it must contain everything.
@@ -170,7 +315,7 @@ Tell the user: `📄 Evidence written to evidence/[context-name]-validation.md`
 
 ---
 
-## Step 6: UPDATE CONTEXT
+## Step 7: UPDATE CONTEXT
 
 Update the context file in `contexts/active/`:
 
@@ -195,7 +340,7 @@ Update the context file in `contexts/active/`:
 
 ---
 
-## Step 7: NEXT STEPS
+## Step 8: NEXT STEPS
 
 ### If PASS:
 
@@ -260,6 +405,7 @@ Then immediately ask:
    - ❌ Missing integration tests → create them based on the context file's success criteria
    - ❌ Regressions found → fix the regression, verify original behavior restored
    - ❌ Real inputs failing → debug the pipeline against the failing fixture
+   - ❌ QA validation failing → for each QA bug: write a failing test first (test-first discipline), then fix the code
 
 2. **After all fixes applied**, re-run the full validation automatically:
    - Go back to **Step 2** and run the complete gate again
@@ -267,8 +413,17 @@ Then immediately ask:
    - Update the context file with the new results
 
 3. **Repeat until PASS or user stops:**
-   - Maximum 3 automatic fix cycles — if still failing after 3 rounds, stop and ask the user for guidance
    - Each cycle appends to the session log: "Fix cycle N: fixed [X], [Y] still failing"
+   - Maximum 3 automatic fix cycles — if still failing after 3 rounds, present options:
+     ```
+     ⚠️ QA validation partially passing (X/Y) after 3 fix cycles.
+
+     Options:
+     1. Keep fixing — I'll try 3 more fix cycles
+     2. Ship with known issues — document in evidence, create follow-up context in backlog
+     3. Stop — I'll investigate manually
+     ```
+   - If option 2: create `contexts/backlog/qa_followup_[name].md` with remaining bugs, set evidence verdict to `PASS WITH CAVEATS`
 
 ---
 

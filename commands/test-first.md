@@ -58,7 +58,7 @@ After Phase 3 verification completes:
      ```
 
 2. **Route to next step:**
-   - If DONE → "Run `/ai-dev-advisor:review-evidence` to validate all evidence gates before shipping."
+   - If DONE → "Run `/ai-dev-advisor:review-evidence` to validate all evidence gates (including live QA) before shipping."
    - If needs more work → List what's missing and suggest specific actions to address each gap.
 
 Feature/fix description: $ARGUMENTS

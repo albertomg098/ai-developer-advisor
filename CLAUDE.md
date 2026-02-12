@@ -51,6 +51,7 @@ Use the decision tree (in `dev-advisor` skill):
 - Tests exist and pass
 - Coverage >80%
 - No regressions
+- QA validation passes (for runnable apps)
 - Context file updated
 
 ### Step 5: Complete
@@ -85,7 +86,7 @@ Slash commands for common workflows. Available via `/ai-dev-advisor:<name>`:
 | `/ai-dev-advisor:create-context` | Generate a new context tracking file from template |
 | `/ai-dev-advisor:test-first` | Guided test-first implementation (3 phases with pauses) |
 | `/ai-dev-advisor:research` | Research-first workflow for unfamiliar technology (3 phases with pauses) |
-| `/ai-dev-advisor:review-evidence` | Full validation gate: tests, real inputs, evidence file, context update, ship |
+| `/ai-dev-advisor:review-evidence` | Full validation gate: tests, real inputs, live QA, evidence file, context update, ship |
 | `/ai-dev-advisor:switch-context` | Checkpoint current work, switch to different context |
 | `/ai-dev-advisor:setup-advisor` | Install advisor into a project — appends to CLAUDE.md, creates dirs |
 | `/ai-dev-advisor:setup-parallel` | Set up parallel worktree sessions for multiple tasks |
@@ -104,10 +105,12 @@ Slash commands for common workflows. Available via `/ai-dev-advisor:<name>`:
 - [ ] Coverage >80%
 - [ ] No regressions
 - [ ] Context file updated
+- [ ] QA validation passes (if applicable)
 
 ### Before Commit
 - [ ] All tests green
 - [ ] Evidence documented
+- [ ] QA validated (or N/A for libraries)
 - [ ] Ready to deploy
 
 ---
